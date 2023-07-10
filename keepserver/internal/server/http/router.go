@@ -14,7 +14,7 @@ import (
 
 type Router struct {
 	cfg     *config.KeeperServer
-	log     *zerolog.Event
+	logger  logging.Logger
 	auth    auth.IAuth
 	storage storage.IStorage
 }

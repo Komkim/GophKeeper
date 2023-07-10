@@ -2,39 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d511148-9a39-47e7-ab1f-19dbb26be647" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../cliclient/cmd/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../cliclient/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../cliclient/go.sum" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../cliclient/internal/creditcard.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../config/auth.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../config/cliclient.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../config/keeperserver.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/fileserver.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apperror/error.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/apperror/middleware.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/file/handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/file/model.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/file/service.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/file/storage.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/file/storage/minio/storage.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/handlers/metric/handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/logging/logging.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/minio/client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/shutdown/shutdown.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../internal/keeperserver/auth/auth.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../internal/keeperserver/server/http/middleware.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../internal/keeperserver/server/http/router.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../internal/keeperserver/server/server.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../internal/keeperserver/storage/storage.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pkg/logger/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../authserver/cmd/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../keepserver/cmd/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../keepserver/config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../keepserver/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../keepserver/internal/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../keepserver/internal/server/http/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../keepserver/internal/server/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../keepserver/pkg/logging/logging.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../.github/workflows/build.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../internal/keeperserver/auth/auth.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../internal/keeperserver/server/http/middleware.go" beforeDir="false" afterPath="$PROJECT_DIR$/../keepserver/internal/server/http/middleware.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../internal/keeperserver/server/http/router.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../internal/keeperserver/server/server.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../internal/keeperserver/storage/storage.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,10 +82,10 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="454" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1688816492409">
+    <state x="454" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1688989504384">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state x="454" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1688816492409" />
+    <state x="454" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1688989504384" />
     <state width="1802" height="340" key="GridCell.Tab.0.bottom" timestamp="1688816641184">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>

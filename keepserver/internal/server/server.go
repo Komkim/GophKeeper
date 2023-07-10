@@ -1,22 +1,21 @@
 package server
 
 import (
+	"GophKeeper/keepserver/pkg/logging"
 	"net/http"
-
-	"github.com/rs/zerolog"
 )
 
 type Server struct {
 	httpServer *http.Server
-	log        *zerolog.Event
+	logger     logging.Logger
 }
 
-func NewServer(log *zerolog.Event, address string, handler http.Handler) *Server {
+func NewServer(log logging.Logger, address string, handler http.Handler) *Server {
 	return &Server{
 		httpServer: &http.Server{
 			Addr:    address,
 			Handler: handler,
 		},
-		log: log,
+		logger: log,
 	}
 }
