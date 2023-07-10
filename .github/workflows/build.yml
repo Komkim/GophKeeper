@@ -61,33 +61,33 @@ jobs:
           cd cliclient/cmd
           go build -o cliclient -buildvcs=false
 
-    cliclient_test:
-      needs: [cliclient_build]
-      runs-on: ubuntu-latest
-      container: golang:1.19
+  cliclient_test:
+    needs: [cliclient_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
 
-      steps:
+    steps:
 
-        - name: Checkout
-          uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - name: Test cliclient
-          run: |
-            go test cliclient/... -cover
+      - name: Test cliclient
+        run: |
+          go test cliclient/... -cover
 
-    cliclient_lint:
-      needs: [cliclient_build]
-      runs-on: ubuntu-latest
-      container: golang:1.19
+  cliclient_lint:
+    needs: [cliclient_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
 
-      steps:
+    steps:
 
-        - name: Checkout
-          uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - name: lint cliclient
-          run: |
-            go vet -vettool=$(which statictest) cliclient/...
+      - name: lint cliclient
+        run: |
+          go vet -vettool=$(which statictest) cliclient/...
 
   authserver_build:
     runs-on: ubuntu-latest
@@ -103,33 +103,33 @@ jobs:
           cd authserver/cmd
           go build -o authserver -buildvcs=false
 
-    authserver_test:
-      needs: [authserver_build]
-      runs-on: ubuntu-latest
-      container: golang:1.19
+  authserver_test:
+    needs: [authserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
 
-      steps:
+    steps:
 
-        - name: Checkout
-          uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - name: Test authserver
-          run: |
-            go test authserver/... -cover
+      - name: Test authserver
+        run: |
+          go test authserver/... -cover
 
-    authserver_lint:
-      needs: [authserver_build]
-      runs-on: ubuntu-latest
-      container: golang:1.19
+  authserver_lint:
+    needs: [authserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
 
-      steps:
+    steps:
 
-        - name: Checkout
-          uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - name: lint authserver
-          run: |
-            go vet -vettool=$(which statictest) authserver/...
+      - name: lint authserver
+        run: |
+          go vet -vettool=$(which statictest) authserver/...
 
   keepserver_build:
     runs-on: ubuntu-latest
@@ -145,30 +145,30 @@ jobs:
           cd keepserver/cmd
           go build -o keepserver -buildvcs=false
 
-    keepserver_test:
-      needs: [keepserver_build]
-      runs-on: ubuntu-latest
-      container: golang:1.19
+  keepserver_test:
+    needs: [keepserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
 
-      steps:
+    steps:
 
-        - name: Checkout
-          uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - name: Test keepserver
-          run: |
-            go test keepserver/... -cover
+      - name: Test keepserver
+        run: |
+          go test keepserver/... -cover
 
-    keepserver_lint:
-      needs: [keepserver_build]
-      runs-on: ubuntu-latest
-      container: golang:1.19
+  keepserver_lint:
+    needs: [keepserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
 
-      steps:
+    steps:
 
-        - name: Checkout
-          uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - name: lint keepserver
-          run: |
-            go vet -vettool=$(which statictest) keepserver/...
+      - name: lint keepserver
+        run: |
+          go vet -vettool=$(which statictest) keepserver/...
