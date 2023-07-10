@@ -17,7 +17,7 @@ jobs:
       - name: Build fileserver
         run: |
           cd fileserver/cmd
-          go build -o filserver
+          go build -o filserver -buildvcs=false
 
   test:
     needs: [build]
