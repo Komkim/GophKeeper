@@ -47,47 +47,47 @@ jobs:
         run: |
           go vet -vettool=$(which statictest) fileserver/...
 
-#  build_cliclient:
-#    runs-on: ubuntu-latest
-#    container: golang:1.19
-#
-#    steps:
-#
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Build cliclient
-#        run: |
-#          cd cliclient/cmd
-#          go build -o cliclient -buildvcs=false
-#
-#    test:
-#      needs: [build_cliclient]
-#      runs-on: ubuntu-latest
-#      container: golang:1.19
-#
-#      steps:
-#
-#        - name: Checkout
-#          uses: actions/checkout@v3
-#
-#        - name: Test cliclient
-#          run: |
-#            go test cliclient/... -cover
-#
-#    lint:
-#      needs: [build_cliclient]
-#      runs-on: ubuntu-latest
-#      container: golang:1.19
-#
-#      steps:
-#
-#        - name: Checkout
-#          uses: actions/checkout@v3
-#
-#        - name: lint cliclient
-#          run: |
-#            go vet -vettool=$(which statictest) cliclient/...
+  build_cliclient:
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build cliclient
+        run: |
+          cd cliclient/cmd
+          go build -o cliclient -buildvcs=false
+
+    test:
+      needs: [build_cliclient]
+      runs-on: ubuntu-latest
+      container: golang:1.19
+
+      steps:
+
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Test cliclient
+          run: |
+            go test cliclient/... -cover
+
+    lint:
+      needs: [build_cliclient]
+      runs-on: ubuntu-latest
+      container: golang:1.19
+
+      steps:
+
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: lint cliclient
+          run: |
+            go vet -vettool=$(which statictest) cliclient/...
 #
 #  build_authserver:
 #    runs-on: ubuntu-latest
