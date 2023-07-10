@@ -1,0 +1,48 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build fileserver
+        run: |
+          cd fileserver/cmd
+          go build -o filserver
+
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+      steps:
+
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Test fileserver
+          run: |
+            go test fileserver/... -cover
+
+  lint:
+    needs: [build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: lint fileserver
+        run: |
+          go vet -vettool=$(which statictest) fileserver/...
