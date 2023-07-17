@@ -43,8 +43,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name Build linter
-        run:|
+      - name: Build linter
+        run: |
           cd linter/cmd
           go build -o linter -buildvcs=false
           ./linter ../
