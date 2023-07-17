@@ -43,6 +43,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name Build linter
+        run:|
+          cd linter/cmd
+          go build -o linter -buildvcs=false
+          ./linter ../
+
       - name: lint fileserver
         run: |
           go vet -vettool=$(which statictest) fileserver/...
@@ -142,8 +148,28 @@ jobs:
 
       - name: Build keepserver
         run: |
-          cd keepserver/cmd
+          cd keepserver/cmd/keepserver
           go build -o keepserver -buildvcs=false
+
+
+  keepserver_migration:
+    needs: [keepserver_build]
+      runs-on: ubuntu-latest
+      container: golang:1.19
+
+      steps:
+
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Build migrations
+          run: |
+            cd keepserver/cmd/migrations
+            go build -o keepmigration -buildvcs=false
+
+        - name: Start migration
+          run: |
+            ./keepmigration
 
   keepserver_test:
     needs: [keepserver_build]

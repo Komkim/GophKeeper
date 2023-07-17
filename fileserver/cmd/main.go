@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"time"
 
-	"fileserver/internal/config"
+	"fileserver/config"
 	"fileserver/internal/file"
 	"fileserver/internal/file/storage/minio"
 	//"fileserver/pkg/handlers/metric"

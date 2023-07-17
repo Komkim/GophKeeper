@@ -14,5 +14,3 @@ type Client struct {
 	//config *config.Agent
 	url *url.URL
 }
-
-func New()
