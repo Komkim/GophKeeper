@@ -1,0 +1,5 @@
+---
+
+is_debug: true
+database_dsn: "postgres://postgres:postgres@localhost:5432/keep?sslmode=disable"
+address: "localhost:4000"

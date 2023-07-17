@@ -19,6 +19,9 @@ type Config struct {
 		AccessTokenMaxAge      int           `mapstructure:"ACCESS_TOKEN_MAXAGE"`
 		RefreshTokenMaxAge     int           `mapstructure:"REFRESH_TOKEN_MAXAGE"`
 	} `yaml:"token"`
+	RedisUri string `mapstructure:"REDIS_URL"`
+	Secret   string `mapstructure:"secret"`
+	Address  string `mapstructure:"address"`
 }
 
 var instance *Config

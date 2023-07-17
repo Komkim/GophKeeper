@@ -7,6 +7,9 @@ import (
 )
 
 type Config struct {
+	IsDebug     *bool  `yaml:"is_debug"`
+	DatabaseDSN string `yaml:"database_dsn"`
+	Address     string `yaml:"address"`
 }
 
 var instance *Config

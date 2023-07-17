@@ -2,6 +2,7 @@ package service
 
 import (
 	"authserver/internal/model"
+	"github.com/redis/go-redis/v9"
 	"net/http"
 	"time"
 )
@@ -9,6 +10,12 @@ import (
 type Service interface {
 	Auth
 	User
+}
+
+func NewService(db *redis.Client) *Service {
+	return &Service{
+		Auth: NewAuthService(db),
+	}
 }
 
 type Auth interface {

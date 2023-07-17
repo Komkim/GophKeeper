@@ -8,3 +8,6 @@ token:
   REFRESH_TOKEN_PUBLIC_KEY: 123
   ACCESS_TOKEN_EXPIRED_IN: 5m
   REFRESH_TOKEN_EXPIRED_IN: 3600m
+REDIS_URL: localhost:6379
+secret: 123
+address: localhost:8088

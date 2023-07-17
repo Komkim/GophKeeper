@@ -19,3 +19,16 @@ func NewServer(log logging.Logger, address string, handler http.Handler) *Server
 		logger: log,
 	}
 }
+
+// Start - запуск сервера
+func (s *Server) Start() error {
+	//if len(s.cfg.CryptoKey) > 0 {
+	//	return s.httpServer.ListenAndServeTLS(certFile, s.cfg.CryptoKey)
+	//}
+	return s.httpServer.ListenAndServe()
+}
+
+// GetServer - получение сервера
+func (s *Server) GetServer() *http.Server {
+	return s.httpServer
+}
