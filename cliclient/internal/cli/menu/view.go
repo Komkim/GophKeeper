@@ -1,4 +1,4 @@
-package view
+package menu
 
 // An example demonstrating an application with multiple views.
 //
@@ -16,7 +16,6 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/fogleman/ease"
 	"github.com/lucasb-eyer/go-colorful"
-	"github.com/muesli/reflow/indent"
 	"github.com/muesli/termenv"
 )
 
@@ -39,7 +38,7 @@ var (
 )
 
 func Start() {
-	initialModel := model{0, false, 10, 0, 0, false, false}
+	initialModel := model{0, 0, 10, 0, 0, false, false}
 	p := tea.NewProgram(initialModel)
 	if _, err := p.Run(); err != nil {
 		fmt.Println("could not start program:", err)
@@ -65,7 +64,7 @@ func frame() tea.Cmd {
 
 type model struct {
 	Choice   int
-	Chosen   bool
+	Lvl      int
 	Ticks    int
 	Frames   int
 	Progress float64
@@ -90,24 +89,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	// Hand off the message and model to the appropriate update function for the
 	// appropriate view based on the current state.
-	if !m.Chosen {
-		return updateChoices(msg, m)
-	}
-	return updateChosen(msg, m)
-}
+	return updateChoices(msg, m)
 
-// The main view, which just calls the appropriate sub-view
-func (m model) View() string {
-	var s string
-	if m.Quitting {
-		return "\n  See you later!\n\n"
-	}
-	if !m.Chosen {
-		s = choicesView(m)
-	} else {
-		s = chosenView(m)
-	}
-	return indent.String("\n"+s+"\n\n", 2)
 }
 
 // Sub-update functions
@@ -119,16 +102,22 @@ func updateChoices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "j", "down":
 			m.Choice++
-			if m.Choice > 3 {
-				m.Choice = 3
-			}
+			//if m.Choice > 3 {
+			//	m.Choice = 3
+			//}
 		case "k", "up":
 			m.Choice--
 			if m.Choice < 0 {
 				m.Choice = 0
 			}
 		case "enter":
-			m.Chosen = true
+			m.Lvl++
+			return m, frame()
+		case "c":
+			m.Lvl--
+			if m.Lvl < 0 {
+				m.Lvl = 0
+			}
 			return m, frame()
 		}
 
@@ -172,63 +161,6 @@ func updateChosen(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	}
 
 	return m, nil
-}
-
-// Sub-views
-
-// The first view, where you're choosing a task
-func choicesView(m model) string {
-	//c := m.Choice
-	//
-	//header := "Выбери что хочешь\n\n"
-	//footer := subtle("j/k, up/down: select") + dot + subtle("enter: choose") + dot + subtle("q, esc: quit")
-	//
-	//choices := fmt.Sprintf(
-	//	"%s\n%s\n\n",
-	//	checkbox("Войти", c == 0),
-	//	checkbox("Зарегистрироваться", c == 1),
-	//)
-	//return fmt.Sprintf(header, choices, footer)
-
-	c := m.Choice
-
-	tpl := "What to do today?\n\n"
-	tpl += "%s\n\n"
-	tpl += "Program quits in %s seconds\n\n"
-	tpl += subtle("j/k, up/down: select") + dot + subtle("enter: choose") + dot + subtle("q, esc: quit")
-
-	choices := fmt.Sprintf(
-		"%s\n%s\n%s\n%s",
-		checkbox("Plant carrots", c == 0),
-		checkbox("Go to the market", c == 1),
-		checkbox("Read something", c == 2),
-		checkbox("See friends", c == 3),
-	)
-
-	return fmt.Sprintf(tpl, choices, colorFg(strconv.Itoa(m.Ticks), "79"))
-}
-
-// The second view, after a task has been chosen
-func chosenView(m model) string {
-	var msg string
-
-	switch m.Choice {
-	case 0:
-		msg = fmt.Sprintf("Очень хорошо")
-		//case 1:
-		//	msg = fmt.Sprintf("A trip to the market?\n\nOkay, then we should install %s and %s...", keyword("marketkit"), keyword("libshopping"))
-		//case 2:
-		//	msg = fmt.Sprintf("Reading time?\n\nOkay, cool, then we’ll need a library. Yes, an %s.", keyword("actual library"))
-		//default:
-		//	msg = fmt.Sprintf("It’s always good to see friends.\n\nFetching %s and %s...", keyword("social-skills"), keyword("conversationutils"))
-	}
-
-	label := "Downloading..."
-	if m.Loaded {
-		label = fmt.Sprintf("Downloaded. Exiting in %s seconds...", colorFg(strconv.Itoa(m.Ticks), "79"))
-	}
-
-	return msg + "\n\n" + label + "\n" + progressbar(m.Progress) + "%"
 }
 
 func checkbox(label string, checked bool) string {
