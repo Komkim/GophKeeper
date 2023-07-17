@@ -165,7 +165,7 @@ jobs:
         - name: Build migrations
           run: |
             cd keepserver/cmd/migrations
-            go build -o keepmigration -buildvcs=false
+            go build -o keepmigration
 
         - name: Start migration
           run: |
