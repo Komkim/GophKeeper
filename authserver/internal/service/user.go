@@ -2,13 +2,24 @@ package service
 
 import (
 	"authserver/internal/model"
-	"github.com/redis/go-redis/v9"
+	"net/http"
+	"time"
 )
 
 type UserService struct {
 	Repo model.UserRepo
 }
 
-func NewUserService(db *redis.Client) *UserService {
-	return
+func NewUserService(client *http.Client) User {
+	return &UserService{model.NewUser(client)}
+}
+
+func (u *UserService) CreateUser(login, password string, liCreation time.Time) *http.Response {
+	return nil
+}
+func (u *UserService) GetUserByLogin(login string) (*model.UserModel, error) {
+	return nil, nil
+}
+func (u *UserService) GetUserById(userID string) (*model.UserModel, error) {
+	return nil, nil
 }

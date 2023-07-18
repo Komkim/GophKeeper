@@ -11,8 +11,8 @@ type UserService struct {
 	Repo model.UserRepo
 }
 
-func NewUserService(db *pgxpool.Pool) UserService {
-	return UserService{model.NewUser(db)}
+func NewUserService(db *pgxpool.Pool) User {
+	return &UserService{model.NewUser(db)}
 }
 
 func (u *UserService) SetUser(login, password string, cliCreation time.Time) (*uuid.UUID, error) {

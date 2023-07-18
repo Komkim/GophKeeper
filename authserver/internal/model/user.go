@@ -20,3 +20,5 @@ type User struct {
 func NewUser(client *http.Client) *User {
 	return &User{client: client}
 }
+
+//todo надо сделать отправку юзера в keepservice

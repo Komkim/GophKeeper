@@ -1,6 +1,8 @@
 package model
 
 import (
+	client "cliclient/internal/model/client"
+	db "cliclient/internal/model/db"
 	"github.com/google/uuid"
 	"time"
 )
@@ -20,43 +22,43 @@ const DBTIMEOUT = 5
 
 type CardRepo interface {
 	SetCard(number, cvv, date string, userID uuid.UUID, cliCreation time.Time) (*uuid.UUID, error)
-	GetCards(userID uuid.UUID) ([]ResponseCardModel, error)
-	GetCard(ID uuid.UUID) (*ResponseCardModel, error)
+	GetCards(userID uuid.UUID) ([]client.ResponseCardModel, error)
+	GetCard(ID uuid.UUID) (*client.ResponseCardModel, error)
 }
 
 type FileRepo interface {
 	SetFile(name string, userID uuid.UUID, cliCreation time.Time) (*uuid.UUID, error)
-	GetFiles(userID uuid.UUID) ([]ResponseFileModel, error)
-	GetFile(ID uuid.UUID) (*ResponseFileModel, error)
+	GetFiles(userID uuid.UUID) ([]client.ResponseFileModel, error)
+	GetFile(ID uuid.UUID) (*client.ResponseFileModel, error)
 }
 
 type NoteRepo interface {
 	SetNote(note string, userID uuid.UUID, cliCreation time.Time) (*uuid.UUID, error)
-	GetNotes(userID uuid.UUID) ([]ResponseNoteModel, error)
-	GetNote(ID uuid.UUID) (*ResponseNoteModel, error)
+	GetNotes(userID uuid.UUID) ([]client.ResponseNoteModel, error)
+	GetNote(ID uuid.UUID) (*client.ResponseNoteModel, error)
 }
 
 type UserRepo interface {
 	SetUser(login, password string, cliCreation time.Time) (*uuid.UUID, error)
-	GetUser(ID uuid.UUID) (*ResponseUserModel, error)
+	GetUser(ID uuid.UUID) (*client.ResponseUserModel, error)
 }
 
 type DBCardRepo interface {
 	SetDBCard(number, cvv, date string, userId uuid.UUID, cliCreation time.Time) error
-	GetDBCards() ([]DBCardModel, error)
+	GetDBCards() ([]db.DBCardModel, error)
 }
 
 type DBFileRepo interface {
 	SetDBFile(name string, userId uuid.UUID, cliCreation time.Time) error
-	GetDBFiles() ([]DBFileModel, error)
+	GetDBFiles() ([]db.DBFileModel, error)
 }
 
 type DBNoteRepo interface {
 	SetDBNote(note string, userId uuid.UUID, cliCreation time.Time) error
-	GetDBNotes() ([]DBNoteModel, error)
+	GetDBNotes() ([]db.DBNoteModel, error)
 }
 
 type DBUserRepo interface {
 	SetDBUser(login, password string, cliCreation time.Time) error
-	GetDBUsers() ([]DBUserModel, error)
+	GetDBUsers() ([]db.DBUserModel, error)
 }

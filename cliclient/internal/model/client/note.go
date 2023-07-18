@@ -2,6 +2,7 @@ package model
 
 import (
 	"bytes"
+	"cliclient/internal/model"
 	"encoding/json"
 	"github.com/google/uuid"
 	"net/http"
@@ -9,39 +10,35 @@ import (
 	"time"
 )
 
-type RequestCardModel struct {
-	Number      string    `json:"number"`
-	CVV         string    `json:"cvv"`
-	Date        string    `json:"date"`
+type RequestNoteModel struct {
+	Note        string    `json:"note"`
 	UserID      uuid.UUID `json:"user_id"`
 	CliCreation time.Time `json:"cli_creation"`
+	CreateAt    time.Time `json:"create_at"`
 }
 
-type ResponseCardModel struct {
+type ResponseNoteModel struct {
 	ID          uuid.UUID `json:"id"`
-	Number      string    `json:"number"`
-	CVV         string    `json:"cvv"`
-	Date        string    `json:"date"`
+	Note        string    `json:"note"`
 	UserID      uuid.UUID `json:"user_id"`
 	CliCreation time.Time `json:"cli_creation"`
+	CreateAt    time.Time `json:"create_at"`
 }
 
-type Card struct {
+type Note struct {
 	client *http.Client
 	url    *url.URL
 }
 
-func NewCard(client *http.Client) *Card {
-	return &Card{client: client}
+func NewNote(client *http.Client) *Note {
+	return &Note{client: client}
 }
 
-func (c *Card) SetCard(number, cvv, date string, userID uuid.UUID, cliCreation time.Time) (*uuid.UUID, error) {
-	u := c.url.JoinPath(CardApi)
+func (n *Note) SetNote(note string, userID uuid.UUID, cliCreation time.Time) (*uuid.UUID, error) {
+	u := n.url.JoinPath(model.NoteApi)
 
-	data, err := json.Marshal(RequestCardModel{
-		Number:      number,
-		CVV:         cvv,
-		Date:        date,
+	data, err := json.Marshal(RequestNoteModel{
+		Note:        note,
 		UserID:      userID,
 		CliCreation: cliCreation,
 	})
@@ -59,7 +56,7 @@ func (c *Card) SetCard(number, cvv, date string, userID uuid.UUID, cliCreation t
 	}
 
 	req.Header.Add("Content-Type", "application/json")
-	resp, err := c.client.Do(req)
+	resp, err := n.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -74,8 +71,8 @@ func (c *Card) SetCard(number, cvv, date string, userID uuid.UUID, cliCreation t
 	return &userId, nil
 }
 
-func (c *Card) GetCards(userID uuid.UUID) ([]ResponseCardModel, error) {
-	u := c.url.JoinPath(CardApi)
+func (n *Note) GetNotes(userID uuid.UUID) ([]ResponseNoteModel, error) {
+	u := n.url.JoinPath(model.NoteApi)
 
 	type us struct {
 		UserID uuid.UUID `json:"user_id"`
@@ -96,13 +93,13 @@ func (c *Card) GetCards(userID uuid.UUID) ([]ResponseCardModel, error) {
 	}
 
 	req.Header.Add("Content-Type", "application/json")
-	resp, err := c.client.Do(req)
+	resp, err := n.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
-	var models []ResponseCardModel
+	var models []ResponseNoteModel
 	err = json.NewDecoder(resp.Body).Decode(&models)
 	if err != nil {
 		return nil, err
@@ -111,8 +108,8 @@ func (c *Card) GetCards(userID uuid.UUID) ([]ResponseCardModel, error) {
 	return models, nil
 }
 
-func (c *Card) GetCard(ID uuid.UUID) (*ResponseCardModel, error) {
-	u := c.url.JoinPath(CardApi)
+func (n *Note) GetNote(ID uuid.UUID) (*ResponseNoteModel, error) {
+	u := n.url.JoinPath(model.NoteApi)
 
 	type us struct {
 		ID uuid.UUID `json:"user_id"`
@@ -133,13 +130,13 @@ func (c *Card) GetCard(ID uuid.UUID) (*ResponseCardModel, error) {
 	}
 
 	req.Header.Add("Content-Type", "application/json")
-	resp, err := c.client.Do(req)
+	resp, err := n.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
-	var model ResponseCardModel
+	var model ResponseNoteModel
 	err = json.NewDecoder(resp.Body).Decode(&model)
 	if err != nil {
 		return nil, err

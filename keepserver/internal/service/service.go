@@ -2,13 +2,12 @@ package service
 
 import (
 	"GophKeeper/keepserver/internal/model"
-	"GophKeeper/keepserver/pkg/logging"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"time"
 )
 
-type Service interface {
+type Service struct {
 	User
 	File
 	Card

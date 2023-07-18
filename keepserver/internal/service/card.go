@@ -11,8 +11,8 @@ type CardService struct {
 	Repo model.CardRepo
 }
 
-func NewCardService(db *pgxpool.Pool) CardService {
-	return CardService{model.NewCard(db)}
+func NewCardService(db *pgxpool.Pool) Card {
+	return &CardService{model.NewCard(db)}
 }
 
 func (c *CardService) SetCard(number, cvv, date string, userId uuid.UUID, cliCreation time.Time) (*uuid.UUID, error) {

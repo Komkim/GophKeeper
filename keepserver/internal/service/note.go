@@ -11,8 +11,8 @@ type NoteService struct {
 	Repo model.NoteRepo
 }
 
-func NewNoteService(db *pgxpool.Pool) NoteService {
-	return NoteService{model.NewNote(db)}
+func NewNoteService(db *pgxpool.Pool) Note {
+	return &NoteService{model.NewNote(db)}
 }
 
 func (n *NoteService) SetNote(note string, userId uuid.UUID, cliCreation time.Time) (*uuid.UUID, error) {

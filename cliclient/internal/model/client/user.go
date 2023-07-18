@@ -2,6 +2,7 @@ package model
 
 import (
 	"bytes"
+	"cliclient/internal/model"
 	"encoding/json"
 	"github.com/google/uuid"
 	"net/http"
@@ -34,7 +35,7 @@ func NewUser(client *http.Client) *User {
 }
 
 func (s *User) SetUser(login, password string, cliCreation time.Time) (*uuid.UUID, error) {
-	u := s.url.JoinPath(UserApi)
+	u := s.url.JoinPath(model.UserApi)
 
 	data, err := json.Marshal(RequestUserModel{
 		Login:       login,
@@ -71,7 +72,7 @@ func (s *User) SetUser(login, password string, cliCreation time.Time) (*uuid.UUI
 }
 
 func (s *User) GetUser(ID uuid.UUID) (*ResponseUserModel, error) {
-	u := s.url.JoinPath(UserApi)
+	u := s.url.JoinPath(model.UserApi)
 
 	type us struct {
 		ID uuid.UUID `json:"user_id"`

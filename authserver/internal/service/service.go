@@ -7,14 +7,15 @@ import (
 	"time"
 )
 
-type Service interface {
+type Service struct {
 	Auth
 	User
 }
 
-func NewService(db *redis.Client) *Service {
+func NewService(db *redis.Client, client *http.Client) *Service {
 	return &Service{
 		Auth: NewAuthService(db),
+		User: NewUserService(client),
 	}
 }
 
@@ -26,6 +27,6 @@ type Auth interface {
 
 type User interface {
 	CreateUser(login, password string, liCreation time.Time) *http.Response
-	GetUserByLogin(login string) (model.UserModel, error)
-	GetUserById(userID string) (model.UserModel, error)
+	GetUserByLogin(login string) (*model.UserModel, error)
+	GetUserById(userID string) (*model.UserModel, error)
 }

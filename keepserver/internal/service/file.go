@@ -11,8 +11,8 @@ type FileService struct {
 	Repo model.FileRepo
 }
 
-func NewFileService(db *pgxpool.Pool) FileService {
-	return FileService{model.NewFile(db)}
+func NewFileService(db *pgxpool.Pool) File {
+	return &FileService{model.NewFile(db)}
 }
 
 func (f *FileService) SetFile(name string, userId uuid.UUID, cliCreation time.Time) (*uuid.UUID, error) {

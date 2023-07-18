@@ -2,6 +2,7 @@ package model
 
 import (
 	"bytes"
+	"cliclient/internal/model"
 	"encoding/json"
 	"github.com/google/uuid"
 	"net/http"
@@ -33,7 +34,7 @@ func NewFile(client *http.Client) *File {
 }
 
 func (f *File) SetFile(name string, userID uuid.UUID, cliCreation time.Time) (*uuid.UUID, error) {
-	u := f.url.JoinPath(FileApi)
+	u := f.url.JoinPath(model.FileApi)
 
 	data, err := json.Marshal(RequestFileModel{
 		Name:        name,
@@ -70,7 +71,7 @@ func (f *File) SetFile(name string, userID uuid.UUID, cliCreation time.Time) (*u
 }
 
 func (f *File) GetFiles(userID uuid.UUID) ([]ResponseFileModel, error) {
-	u := f.url.JoinPath(FileApi)
+	u := f.url.JoinPath(model.FileApi)
 
 	type us struct {
 		UserID uuid.UUID `json:"user_id"`
@@ -107,7 +108,7 @@ func (f *File) GetFiles(userID uuid.UUID) ([]ResponseFileModel, error) {
 }
 
 func (f *File) GetFile(ID uuid.UUID) (*ResponseFileModel, error) {
-	u := f.url.JoinPath(FileApi)
+	u := f.url.JoinPath(model.FileApi)
 
 	type us struct {
 		ID uuid.UUID `json:"user_id"`
