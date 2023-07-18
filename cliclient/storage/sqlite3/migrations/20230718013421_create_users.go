@@ -16,7 +16,7 @@ func upCreateUsers(tx *sql.Tx) error {
 				login	         varchar(40) not null,
 				password  varchar(500) not null,
 				cli_creation	 timestamp,
-				deleted			 boolean default false,
+				sent			 boolean default false,
 				create_at        timestamp with time zone default current_timestamp
 			);
 	`)

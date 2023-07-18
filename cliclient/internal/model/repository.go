@@ -16,6 +16,8 @@ const (
 	UserApiId = "/api/user/:id"
 )
 
+const DBTIMEOUT = 5
+
 type CardRepo interface {
 	SetCard(number, cvv, date string, userID uuid.UUID, cliCreation time.Time) (*uuid.UUID, error)
 	GetCards(userID uuid.UUID) ([]ResponseCardModel, error)
@@ -37,4 +39,24 @@ type NoteRepo interface {
 type UserRepo interface {
 	SetUser(login, password string, cliCreation time.Time) (*uuid.UUID, error)
 	GetUser(ID uuid.UUID) (*ResponseUserModel, error)
+}
+
+type DBCardRepo interface {
+	SetDBCard(number, cvv, date string, userId uuid.UUID, cliCreation time.Time) error
+	GetDBCards() ([]DBCardModel, error)
+}
+
+type DBFileRepo interface {
+	SetDBFile(name string, userId uuid.UUID, cliCreation time.Time) error
+	GetDBFiles() ([]DBFileModel, error)
+}
+
+type DBNoteRepo interface {
+	SetDBNote(note string, userId uuid.UUID, cliCreation time.Time) error
+	GetDBNotes() ([]DBNoteModel, error)
+}
+
+type DBUserRepo interface {
+	SetDBUser(login, password string, cliCreation time.Time) error
+	GetDBUsers() ([]DBUserModel, error)
 }

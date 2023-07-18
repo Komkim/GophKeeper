@@ -18,7 +18,7 @@ func upCreateCard(tx *sql.Tx) error {
 				date			 varchar(40) not null,
 				user_id			 uuid not null,
 				cli_creation	 timestamp,
-				deleted			 boolean default false,
+				sent			 boolean default false,
 				create_at        timestamp with time zone default current_timestamp
 			);
 	`)
