@@ -47,11 +47,10 @@ jobs:
         run: |
           cd linter/cmd
           go build -o linter -buildvcs=false
-          ./linter ../
 
       - name: lint fileserver
         run: |
-          go vet -vettool=$(which statictest) fileserver/...
+          ./linter ../fileserver
 
   cliclient_build:
     runs-on: ubuntu-latest
@@ -91,9 +90,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Build linter
+          run: |
+            cd linter/cmd
+            go build -o linter -buildvcs=false
+
       - name: lint cliclient
         run: |
-          go vet -vettool=$(which statictest) cliclient/...
+          ./linter ../cliclient
 
   authserver_build:
     runs-on: ubuntu-latest
@@ -133,9 +137,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Build linter
+          run: |
+            cd linter/cmd
+            go build -o linter -buildvcs=false
+
       - name: lint authserver
         run: |
-          go vet -vettool=$(which statictest) authserver/...
+          ./linter ../authserver
 
   keepserver_build:
     runs-on: ubuntu-latest
@@ -194,6 +203,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Build linter
+          run: |
+            cd linter/cmd
+            go build -o linter -buildvcs=false
+
       - name: lint keepserver
         run: |
-          go vet -vettool=$(which statictest) keepserver/...
+          ./linter ../keepserver
