@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  fileserver_build:
     runs-on: ubuntu-latest
     container: golang:1.19
 
@@ -17,24 +17,10 @@ jobs:
       - name: Build fileserver
         run: |
           cd fileserver/cmd
-          go build -o filserver
+          go build -o filserver -buildvcs=false
 
-  test:
-    needs: [build]
-    runs-on: ubuntu-latest
-    container: golang:1.19
-
-      steps:
-
-        - name: Checkout
-          uses: actions/checkout@v3
-
-        - name: Test fileserver
-          run: |
-            go test fileserver/... -cover
-
-  lint:
-    needs: [build]
+  filserver_test:
+    needs: [fileserver_build]
     runs-on: ubuntu-latest
     container: golang:1.19
 
@@ -43,6 +29,185 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Test fileserver
+        run: |
+          go test fileserver/... -cover
+
+  filserver_lint:
+    needs: [fileserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build linter
+        run: |
+          cd linter/cmd
+          go build -o linter -buildvcs=false
+
       - name: lint fileserver
         run: |
-          go vet -vettool=$(which statictest) fileserver/...
+          ./linter ../fileserver
+
+  cliclient_build:
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build cliclient
+        run: |
+          cd cliclient/cmd
+          go build -o cliclient -buildvcs=false
+
+  cliclient_test:
+    needs: [cliclient_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Test cliclient
+        run: |
+          go test cliclient/... -cover
+
+  cliclient_lint:
+    needs: [cliclient_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build linter
+        run: |
+          cd linter/cmd
+          go build -o linter -buildvcs=false
+
+      - name: lint cliclient
+        run: |
+          ./linter ../cliclient
+
+  authserver_build:
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build authserver
+        run: |
+          cd authserver/cmd
+          go build -o authserver -buildvcs=false
+
+  authserver_test:
+    needs: [authserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Test authserver
+        run: |
+          go test authserver/... -cover
+
+  authserver_lint:
+    needs: [authserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build linter
+        run: |
+          cd linter/cmd
+          go build -o linter -buildvcs=false
+
+      - name: lint authserver
+        run: |
+          ./linter ../authserver
+
+  keepserver_build:
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build keepserver
+        run: |
+          cd keepserver/cmd/keepserver
+          go build -o keepserver -buildvcs=false
+
+  keepserver_migration:
+    needs: [keepserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build migrations
+        run: |
+          cd keepserver/cmd/migrations
+          go build -o keepmigration  -buildvcs=false
+
+      - name: Start migrations
+        run: |
+          ./keepmigration
+
+  keepserver_test:
+    needs: [keepserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Test keepserver
+        run: |
+          go test keepserver/... -cover
+
+  keepserver_lint:
+    needs: [keepserver_build]
+    runs-on: ubuntu-latest
+    container: golang:1.19
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build linter
+        run: |
+          cd linter/cmd
+          go build -o linter -buildvcs=false
+
+      - name: lint keepserver
+        run: |
+          ./linter ../keepserver
