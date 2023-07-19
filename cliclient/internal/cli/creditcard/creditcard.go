@@ -5,7 +5,6 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -34,16 +33,6 @@ type model struct {
 	inputs  []textinput.Model
 	focused int
 	err     error
-}
-
-func Start() {
-	p := tea.NewProgram(InitialModel())
-
-	m, err := p.Run()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(m)
 }
 
 // Validator functions to ensure valid input
@@ -96,7 +85,7 @@ func cvvValidator(s string) error {
 	return err
 }
 
-func InitialModel() model {
+func InitCard() model {
 	var inputs []textinput.Model = make([]textinput.Model, 3)
 	inputs[ccn] = textinput.New()
 	inputs[ccn].Placeholder = "4505 **** **** 1234"

@@ -1,6 +1,7 @@
 package menu
 
 import (
+	"cliclient/internal/cli/creditcard"
 	"cliclient/internal/cli/inputs"
 	"fmt"
 	tea "github.com/charmbracelet/bubbletea"
@@ -80,6 +81,12 @@ func (m *model) View() string {
 	case 204:
 		m.Choice = 0
 		s, _ = card(m)
+	//добавить карту
+	case 210:
+		l, _ := tea.NewProgram(creditcard.InitCard()).Run()
+		s = l.View()
+		m.Lvl -= 10
+		m.Choice = 0
 
 	//Работа с файлами
 	case 32:
