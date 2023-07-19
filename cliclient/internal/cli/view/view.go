@@ -128,7 +128,7 @@ func updateChoices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 				m.Choice = 0
 			}
 		case "enter":
-			m.Chosen = true
+			m.Chosen = !m.Chosen
 			return m, frame()
 		}
 

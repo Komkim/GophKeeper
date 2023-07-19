@@ -167,6 +167,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
+	//tpl := "%s\n\n"
+	//tpl += subtle("j/k, up/down, стрелки: вверх/вниз") + dot + subtle("enter: выбрать с: назад") + dot + subtle("q, esc: quit")
+
 	return fmt.Sprintf(
 		` Total: $21.50:
 

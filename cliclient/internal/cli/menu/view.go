@@ -38,7 +38,7 @@ var (
 )
 
 func Start() {
-	initialModel := model{0, 0, 10, 0, 0, false, false}
+	initialModel := &model{0, 0, 10, 0, 0, false, false}
 	p := tea.NewProgram(initialModel)
 	if _, err := p.Run(); err != nil {
 		fmt.Println("could not start program:", err)
@@ -72,12 +72,12 @@ type model struct {
 	Quitting bool
 }
 
-func (m model) Init() tea.Cmd {
+func (m *model) Init() tea.Cmd {
 	return tick()
 }
 
 // Main update function.
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	// Make sure these keys always quit
 	if msg, ok := msg.(tea.KeyMsg); ok {
 		k := msg.String()
@@ -89,7 +89,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	// Hand off the message and model to the appropriate update function for the
 	// appropriate view based on the current state.
-	return updateChoices(msg, m)
+	return updateChoices(msg, *m)
 
 }
 
@@ -102,35 +102,24 @@ func updateChoices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "j", "down":
 			m.Choice++
-			//if m.Choice > 3 {
-			//	m.Choice = 3
-			//}
 		case "k", "up":
 			m.Choice--
 			if m.Choice < 0 {
 				m.Choice = 0
 			}
 		case "enter":
-			m.Lvl++
-			return m, frame()
+			m.Lvl += 10
+			return &m, frame()
 		case "c":
-			m.Lvl--
+			m.Lvl -= 10
 			if m.Lvl < 0 {
 				m.Lvl = 0
 			}
-			return m, frame()
+			return &m, frame()
 		}
-
-		//case tickMsg:
-		//	if m.Ticks == 0 {
-		//		m.Quitting = true
-		//		return m, tea.Quit
-		//	}
-		//	m.Ticks--
-		//	return m, tick()
 	}
 
-	return m, nil
+	return &m, nil
 }
 
 // Update loop for the second view after a choice has been made
@@ -144,9 +133,9 @@ func updateChosen(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 				m.Progress = 1
 				m.Loaded = true
 				m.Ticks = 3
-				return m, tick()
+				return &m, tick()
 			}
-			return m, frame()
+			return &m, frame()
 		}
 
 		//case tickMsg:
@@ -160,7 +149,7 @@ func updateChosen(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 		//	}
 	}
 
-	return m, nil
+	return &m, nil
 }
 
 func checkbox(label string, checked bool) string {
